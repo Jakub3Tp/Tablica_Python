@@ -15,18 +15,41 @@ class Tablica:
         return min(self.tablica)
 
     def maksimum2(self):
-        max_value = max(self.tablica)
-        temp_tablica = [x for x in self.tablica if x != max_value]
-        return max(temp_tablica) if temp_tablica else max_value
+        max1, max2 = (self.tablica[0], self.tablica[1]) if self.tablica[0] > self.tablica[1] else (
+        self.tablica[1], self.tablica[0])
+
+        for i in range(2, self.n):
+            if self.tablica[i] > max1:
+                max2 = max1
+                max1 = self.tablica[i]
+            elif self.tablica[i] > max2 and self.tablica[i] != max1:
+                max2 = self.tablica[i]
+        return max2
 
     def znajdz(self, a):
         return self.tablica.index(a) if a in self.tablica else -1
 
-# Przykładowe użycie:
-tablica = Tablica(10)
-tablica.wypelnij(1, 100)
-print("Tablica:", tablica.tablica)
-print("Maksimum:", tablica.maksimum())
-print("Minimum:", tablica.minimum())
-print("Drugie maksimum:", tablica.maksimum2())
-print("Indeks elementu 50:", tablica.znajdz(50))
+    def __str__(self):
+        return ' '.join(map(str, self.tablica))
+
+def main():
+    n = 10
+    tablica = Tablica(n)
+
+    tablica.wypelnij(1, 100)
+    print("Tablica:", tablica)
+
+    print("Maksimum:", tablica.maksimum())
+    print("Minimum:", tablica.minimum())
+
+    print("Drugie maksimum:", tablica.maksimum2())
+
+    szukana_wartosc = 50
+    indeks = tablica.znajdz(szukana_wartosc)
+    if indeks != -1:
+        print(f"Wartość {szukana_wartosc} znaleziona na indeksie {indeks}")
+    else:
+        print(f"Wartość {szukana_wartosc} nie została znaleziona w tablicy")
+
+if __name__ == "__main__":
+    main()
